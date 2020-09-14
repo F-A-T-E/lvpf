@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 编写mybatis中dao接口里面的方法 -->
+
+<!--注意点 -->
+<mapper namespace="com.java.dao.CustomerMapper">
+	
+
+	
+	<!-- 查询所有数据 -->
+
+	<select id="findAll" resultType="com.java.domain.Customer">
+		select id,name,gender,telephone,address from t_customer
+	</select>	
+	
+	<!-- 添加客户 -->
+	<insert id="save" parameterType="com.java.domain.Customer">
+		insert into t_customer(name,gender,telephone,address) values(#{name},#{gender},#{telephone},#{address});
+	</insert>
+	<!-- 根据id进行查询 -->
+	<select id="findById" parameterType="int" resultType="com.java.domain.Customer">
+		select id,name,gender,telephone,address from t_customer where id = #{value}
+		<!-- 一个变量只需要一个参数 -->
+	</select>
+	<!-- 根据id修改数据 -->
+	<update id="update" parameterType="com.java.domain.Customer">
+		update t_customer
+		set
+		name=#{name},
+		gender=#{gender},
+		telephone=#{telephone},
+		address=#{address}
+		where
+		id = #{id}
+	</update>
+	
+	<!-- 删除 -->
+	<delete id="delete" parameterType="Integer[]">
+		delete from t_customer
+			<where>
+				id
+				<foreach collection="array" item = "id" open="in (" close=")" separator=",">
+					#{id}
+				</foreach>
+			
+			</where>
+	
+	</delete>
+	
+	
+	
+	
+	
+</mapper>
